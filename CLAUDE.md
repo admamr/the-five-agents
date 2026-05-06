@@ -18,3 +18,16 @@ The team composition and each agent's role will be defined as the project evolve
 ```
 
 All agent logic, skills, and custom commands live under `.claude/` and are loaded automatically by Claude Code.
+
+## Vault (Long-Term Memory)
+
+The project vault at `vault/` is Claude's persistent memory. **Use the `obsidian-vault-workflow` skill at the start and end of every task.**
+
+- `vault/Meeting Notes/` — session logs, architecture decisions, code work
+- `vault/Skills/` — documentation for every installed skill
+- `vault/Project Files/` — documentation for every config/root file
+- `vault/Content Briefs/` — editorial briefs and campaign specs
+- `vault/Publishing Log/` — publish runs and post-mortems
+- `vault/Brand Guidelines/` — voice, visuals, tone
+
+Start every session: read `vault/Meeting Notes/_index.md` → find the relevant topic file → read it fully before doing any work.
