@@ -174,10 +174,11 @@ model: claude-sonnet-4-6
 
 | שלב | Agent | קובץ | סטטוס |
 |---|---|---|---|
-| 1 | Agent 1 | `.claude/agents/agent-1.md` | ⏳ pending |
-| 2 | Agent 2 | `.claude/agents/agent-2.md` | ⏳ pending |
-| 3 | Agent 3 | `.claude/agents/agent-3.md` | ⏳ pending |
-| 4 | Agent 4 | `.claude/agents/agent-4.md` | ⏳ pending |
+| 1 | chen | `.claude/agents/chen.md` | ✅ פעיל |
+| 2 | yael | `.claude/agents/yael.md` | ✅ פעיל |
+| 3 | yuval | `.claude/agents/yuval.md` | ✅ פעיל |
+| 4 | yael (שילוב סופי) | `.claude/agents/yael.md` | ✅ פעיל |
+| 5 | guy (QA) | `.claude/agents/guy.md` | ✅ פעיל |
 
 כאשר סוכן מוגדר, הפעל אותו באמצעות כלי ה-`Task` עם ה-context המוכן (ראה פרוטוקול הפעלת סוכן למעלה).
 
@@ -193,6 +194,7 @@ model: claude-sonnet-4-6
 | chen | `.claude/agents/chen.md` | מחקר רשת ואיסוף מקורות | חפש, מצא, מחקר, מאמר על, חדש על, מה קורה עם, מקור על, search, find, research, article about, latest on, news on |
 | yuval | `.claude/agents/yuval.md` | ייצור תמונות | תמונה של, ציור של, תמונת, צור תמונה, תייצר תמונה, generate image, create image, image of, draw, visual of, picture of |
 | yael | `.claude/agents/yael.md` | שכתוב/עריכת תוכן | שכתב, ערוך, נסח מחדש, תרגם, סכם, מאמר, תוכן, פוסט, rewrite, edit, rephrase, translate, summarize, article, content, post |
+| guy | `.claude/agents/guy.md` | בדיקת QA ואישור תוצר סופי | בדוק, אמת, QA, ביקורת, איכות, אישור, check, verify, review, validate, approve, audit — **רץ אוטומטית בסוף כל pipeline תוכן** |
 
 **כשלקוח מבקש מחקר רשת / חיפוש מאמר:**
 
@@ -228,6 +230,37 @@ model: claude-sonnet-4-6
 5. דווח למשתמש: path סופי + מספר תמונות שהוחלפו + סיכום השכתוב
 
 **אם אין placeholders בכלל** — דלג על שלבים 3.a-3.d, רק בצע 3.e (מחק את המקור) ודווח.
+
+---
+
+**QA Loop — סגירת הלולאה (אוטומטי בסוף כל pipeline תוכן):**
+
+אחרי שיעל מחזירה תוצר סופי (עם תמונות אם היו) ב-`Output/<name>.md` — מפעיל את `guy` אוטומטית.
+
+1. הפעל את `guy` עם:
+   - path לתוצר: `Output/<name>.md`
+   - הבריף המקורי (מה המשתמש ביקש)
+   - סבב מספר: `#1` / `#2` / `#3`
+
+2. **אם גיא מחזיר ✅ מאושר:**
+   - הצג למשתמש את התוצר הסופי
+   - ציין: "✅ עבר QA — מאושר להפצה"
+   - סגור את הלולאה
+
+3. **אם גיא מחזיר ❌ דורש תיקון (סבב 1 או 2):**
+   - הפעל את `yael` מחדש עם ההערות של גיא כ-context מפורש
+   - לאחר שיעל מחזירה תוצר מתוקן — הפעל את `guy` שוב (סבב N+1)
+
+4. **סבב 3 הוא האחרון:**
+   - אם גם בסבב 3 גיא דוחה — הצג למשתמש את התוצר + path לדוח QA + הערות גיא
+   - בקש החלטה ידנית: "QA לא עבר אחרי 3 סבבים. הנה התוצר ודוח הבעיות — מה לעשות?"
+
+**לוג Obsidian:** תעד בלוג היומי ב-`vault/Meeting Notes/<topic>.md` כל מעבר QA:
+```
+### QA Log
+- סבב #1: [✅/❌] — guy/QA_Reports/<slug>.md
+- סבב #2 (אם היה): [✅/❌] — guy/QA_Reports/<slug>.md
+```
 
 ---
 
