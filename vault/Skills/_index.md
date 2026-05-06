@@ -21,3 +21,4 @@ Skills הם קבצי הדרכה ב-`.claude/skills/` שמנחים את Claude כ
 - [[verification-before-completion]] — אימות תוצאות לפני הצהרת השלמה
 - [[writing-plans]] — כתיבת תכניות מימוש לפני נגיעה בקוד
 - [[writing-skills]] — יצירה ועריכה של skills חדשים
+- [[gpt-image-gen]] — מעטפת ל-OpenAI Images API (gpt-image-2) לייצור תמונות
