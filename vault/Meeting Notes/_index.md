@@ -7,3 +7,4 @@
 - [[project-structure]] — הקמת מבנה הפרויקט הראשוני
 - [[superpowers-skills-install]] — התקנת Superpowers v5.1.0
 - [[obsidian-vault-setup]] — הקמת vault Obsidian ותיעוד קבצי הפרויקט
+- [[reuven-agent-creation]] — יצירת ראובן, סוכן המנכ"ל הראשי (v1.0)

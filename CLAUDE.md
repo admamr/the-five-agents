@@ -19,6 +19,11 @@ The team composition and each agent's role will be defined as the project evolve
 
 All agent logic, skills, and custom commands live under `.claude/` and are loaded automatically by Claude Code.
 
+## ניתוב דרך ראובן
+
+**כל משימה חייבת לעבור דרך ראובן (סוכן המנכ"ל). אל תבצע משימות ישירות.**
+ראובן מוגדר ב-`.claude/agents/reuven.md` ומנהל את כל הפייפליין (Agent 1 → 2 → 3 → 4).
+
 ## Vault (Long-Term Memory)
 
 The project vault at `vault/` is Claude's persistent memory. **Use the `obsidian-vault-workflow` skill at the start and end of every task.**
