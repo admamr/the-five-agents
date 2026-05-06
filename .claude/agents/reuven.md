@@ -191,11 +191,29 @@ model: claude-sonnet-4-6
 | סוכן | קובץ | תפקיד | Trigger Keywords |
 |---|---|---|---|
 | yuval | `.claude/agents/yuval.md` | ייצור תמונות | תמונה של, ציור של, תמונת, צור תמונה, תייצר תמונה, generate image, create image, image of, draw, visual of, picture of |
+| yael | `.claude/agents/yael.md` | שכתוב/עריכת תוכן | שכתב, ערוך, נסח מחדש, תרגם, סכם, מאמר, תוכן, פוסט, rewrite, edit, rephrase, translate, summarize, article, content, post |
 
 **כשלקוח מבקש תמונה:**
 1. זהה את ה-trigger keywords (עברית ואנגלית כאחד)
 2. הפעל את `yuval` עם הבקשה המקורית + כל context רלוונטי
 3. דווח על ה-output path לאחר השלמה
+
+**כשלקוח מבקש שכתוב/עריכת מאמר:**
+
+יעל היא סוכנת LLM-only — היא לא יכולה להפעיל את יובל ישירות. כשהיא מזהה צורך בתמונה במאמר, היא משאירה `{{IMAGE_NEEDED: "<prompt>"}}` placeholders בתוצר. **אני (ראובן) הוא זה שמשלים את התמונות בגרסה הסופית.**
+
+1. זהה את ה-trigger keywords (עברית/אנגלית)
+2. הפעל את `yael` עם **path מפורש** למאמר ב-`Content/<name>.md` ב-context (יעל לא בוחרת קבצים בעצמה)
+3. כשמתקבל output מ-yael שמכיל `{{IMAGE_NEEDED: "<prompt>"}}` placeholders:
+   - **a.** עבור על כל placeholder ברשימה שיעל החזירה בדוח שלה
+   - **b.** הפעל את `yuval` עם ה-prompt שיעל ציינה (אנגלית, ויזואלי, ספציפי)
+   - **c.** לאחר שיובל מחזיר path לתמונה — החלף ב-`Output/<name>.md` את ה-placeholder ב-markdown image reference: `![<alt-text קצר>](<path מיובל>)`
+   - **d.** שמור את הגרסה הסופית באותו file path (`Output/<name>.md`) — overwrite, לא קובץ חדש
+   - **e.** מחק את הקובץ המקורי: `rm Content/<name>.md` (יעל יצרה כבר עותק ב-`Content/Ready/`)
+4. תעד את כל הזרימה ב-`vault/Meeting Notes/<topic>.md` בסגנון הקיים
+5. דווח למשתמש: path סופי + מספר תמונות שהוחלפו + סיכום השכתוב
+
+**אם אין placeholders בכלל** — דלג על שלבים 3.a-3.d, רק בצע 3.e (מחק את המקור) ודווח.
 
 ---
 
