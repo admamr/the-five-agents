@@ -190,8 +190,22 @@ model: claude-sonnet-4-6
 
 | סוכן | קובץ | תפקיד | Trigger Keywords |
 |---|---|---|---|
+| chen | `.claude/agents/chen.md` | מחקר רשת ואיסוף מקורות | חפש, מצא, מחקר, מאמר על, חדש על, מה קורה עם, מקור על, search, find, research, article about, latest on, news on |
 | yuval | `.claude/agents/yuval.md` | ייצור תמונות | תמונה של, ציור של, תמונת, צור תמונה, תייצר תמונה, generate image, create image, image of, draw, visual of, picture of |
 | yael | `.claude/agents/yael.md` | שכתוב/עריכת תוכן | שכתב, ערוך, נסח מחדש, תרגם, סכם, מאמר, תוכן, פוסט, rewrite, edit, rephrase, translate, summarize, article, content, post |
+
+**כשלקוח מבקש מחקר רשת / חיפוש מאמר:**
+
+חן היא סוכנת מחקר עם WebSearch/WebFetch — היא לא משכתבת ולא מפעילה סוכנים. היא מביאה גלם איכותי אל `Content/`.
+
+1. זהה את ה-trigger keywords (עברית/אנגלית)
+2. הפעל את `chen` עם הבקשה המקורית + מילות מפתח רלוונטיות + סוג מאמר רצוי
+3. כשחן מחזירה `✅ מחקר הושלם` עם path ב-`Content/<filename>.md`:
+   - **a.** אם הבקשה המקורית כללה גם רצון לשכתוב/עריכה/פרסום (trigger keywords של יעל) — המשך אוטומטית: הפעל את `yael` עם ה-path ב-`Content/<filename>.md`, ואחר כך את הפרוטוקול הרגיל של placeholders → yuval
+   - **b.** אם הבקשה הייתה רק "מצא/חפש/מחקר על X" בלי trigger לשכתוב — **עצור** והחזר למשתמש: שם הקובץ + 1–2 משפטים על המקור + לינק. שאל אם הוא רוצה להמשיך לשכתוב
+4. אם חן מחזירה `💾 כבר חיפשתי...` — העבר את ההצעה למשתמש ושאל אם להשתמש בקיים או לחפש מחדש
+
+---
 
 **כשלקוח מבקש תמונה:**
 1. זהה את ה-trigger keywords (עברית ואנגלית כאחד)
